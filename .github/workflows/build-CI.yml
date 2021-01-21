@@ -2,7 +2,7 @@ name: OpenWrt-CI
 
 on:
   schedule:
-    - cron: '0 22 * * 5'
+    - cron: '0 22 * * 6'
   workflow_dispatch:
     
 env:
@@ -48,7 +48,7 @@ jobs:
           cp lede/bin/targets/*/*/*.tar.gz ./openwrt
           sudo ./gen_openwrt -d -k latest
           
-          devices=("phicomm-n1" "rk3328" "s9xxx" "vplus")
+          devices=("phicomm-n1" "x86-64")
           cd out
           for x in ${devices[*]}; do
             cd $x
@@ -64,20 +64,20 @@ jobs:
           name: ${{ env.firmware_phicomm-n1 }}
           path: out/phicomm-n1
 
-      - name: Upload firmware @ rk3328 default beikeyun
+      - name: Upload firmware @ x86-64 default x86-64
         uses: actions/upload-artifact@main
         with:
-          name: ${{ env.firmware_rk3328 }}
-          path: out/rk3328
+          name: ${{ env.firmware_x86-64 }}
+          path: out/x86-64
 
-      - name: Upload firmware @ s9xxx default octopus planet
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ env.firmware_s9xxx }}
-          path: out/s9xxx
+      #- name: Upload firmware @ s9xxx default octopus planet
+      #  uses: actions/upload-artifact@main
+      #  with:
+      #    name: ${{ env.firmware_s9xxx }}
+      #    path: out/s9xxx
 
-      - name: Upload firmware @ vplus
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ env.firmware_vplus }}
-          path: out/vplus
+     # - name: Upload firmware @ vplus
+     #   uses: actions/upload-artifact@main
+     #  with:
+     #  name: ${{ env.firmware_vplus }}
+     #  path: out/vplus
